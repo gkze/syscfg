@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "syscfg"
+version = "0.1.0"
+description = "System Configuration"
+authors = ["George Kontridze <george.kontridze@gmail.com>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "3.8.2p"
+
+[tool.poetry.dev-dependencies]
+pymultilint = "^0.4.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.multilint]
+src_paths = ["*.py"]
+tool_order = ["pyupgrade", "autoflake", "black", "mypy"]
+
+[tool.pyupgrade]
+min_version = "3.8"

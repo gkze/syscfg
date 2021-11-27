@@ -1,0 +1,47 @@
+[alias]
+  branches = branch --sort=committerdate --format='%(committerdate) || %(refname)'
+
+[user]
+	signingkey = 9578FF9AB0BDE622307E7E833A7266FAC0D2F08D
+
+[rebase]
+	pull = true
+
+[fetch]
+	prune = true
+
+[diff]
+	colorMoved = zebra
+
+[includeIf "gitdir:~/Development/github.com/**"]
+	path = ~/.config/git/personal
+
+[includeIf "gitdir:~/.local/share/syscfg/**"]
+	path = ~/.config/git/personal
+
+[includeIf "gitdir:~/Development/github.plaid.com/**"]
+	path = ~/.config/git/plaid
+
+[pager]
+	diff = delta
+	log = delta
+	reflog = delta
+	show = delta
+
+[interactive]
+	diffFilter = delta --color-only --features=interactive
+
+[delta]
+	features = decorations
+
+[delta "interactive"]
+	keep-plus-minus-markers = false
+
+[delta "decorations"]
+	commit-decoration-style = blue ol
+	commit-style = raw
+	file-style = omit
+	hunk-header-decoration-style = blue box
+	hunk-header-file-style = red
+	hunk-header-line-number-style = "#067a00"
+	hunk-header-style = file line-number syntax

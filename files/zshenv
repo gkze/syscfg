@@ -1,0 +1,26 @@
+# Set default editor
+export EDITOR="nvim"
+
+# Set man pager to bat for coloring
+export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+
+# if type brew &>/dev/null; then
+#   HOMEBREW_PREFIX="$(brew --prefix)"
+#   # gnubin
+#   for d in ${HOMEBREW_PREFIX}/opt/*/libexec/gnubin; do export PATH="${d}:${PATH}"; done
+#   # gnuman
+#   for d in ${HOMEBREW_PREFIX}/opt/*/libexec/gnuman; do export MANPATH="${d}:${MANPATH}"; done
+# 
+#   export PATH="/usr/local/sbin:${PATH}"
+# 
+#   # export MANPATH="$(fd -td ^man$ /opt/homebrew/Cellar | tr '\n' ':'):${MANPATH}"
+# 
+#   export PATH="${HOME}/go/bin:${PATH}"
+#   export PATH="${HOMEBREW_PREFIX}/opt/python@3.9/libexec/bin:${PATH}"
+#   export PATH="${HOMEBREW_PREFIX}/opt/ruby/bin:/usr/local/lib/ruby/gems/3.0.0/bin:${PATH}"
+#   
+#   export GROOVY_HOME="${HOMEBREW_PREFIX}/opt/groovy/libexec"
+# fi
+
+# Needed for GPG-signing Git commits
+export GPG_TTY="$(tty)"
