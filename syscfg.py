@@ -81,7 +81,7 @@ def log_cmd_streams(
             data = key.fileobj.read1().decode()  # type: ignore
 
             if not data:
-                proc.communicate(cast(IO[bytes], stdin))
+                proc.communicate(cast(bytes, stdin))
                 return proc.wait()
 
             lines: Iterator[str] = filter(None, data.split("\n"))
@@ -601,7 +601,7 @@ class File(Node):
             (FileAction.APPEND, FileType.FILE): self._append_file,
             (FileAction.REMOVE, FileType.FILE): self._remove_file,
             (FileAction.REMOVE, FileType.DIRECTORY): self._remove_file,
-        }.get((self._action, self._filetype), self._raise_unsupported)()
+        }.get((self._action, self._filetype), self._raise_unsupported)() # type: ignore
 
 
 class Symlink(Node):
@@ -626,16 +626,20 @@ class Symlink(Node):
         )
 
     def act(self: Symlink) -> None:
-        if self._target.exists():
-            if self._target.is_dir():
-                shutil.rmtree(self._target)
-
-            self._target.unlink()
-
         if not self._target.parent.exists():
             self._target.parent.mkdir(0o755, True)
 
-        self._target.symlink_to(self._source)
+        if not self._target.exists():
+            self._target.symlink_to(self._source)
+            return
+
+        if self._target.is_dir():
+            shutil.rmtree(self._target)
+            return
+
+        if self._target.is_symlink():
+            self._target.unlink()
+            return
 
 
 class GitRepo(Node):
@@ -758,7 +762,6 @@ def main(argv: list[str]) -> int:
     icloud_docs: Path = home / "Library" / "Mobile Documents" / "com~apple~CloudDocs"
     os.environ["PATH"] = ":".join(["/opt/homebrew/bin", *os.environ["PATH"].split(":")])
     
-    process(GitRepo("https://github.com/Homebrew/brew", Path("/opt/homebrew")))
 
     process(
         Hostname("rocinante"),
@@ -796,13 +799,14 @@ def main(argv: list[str]) -> int:
             }),
         ]),
         Serial([
+            GitRepo("https://github.com/Homebrew/brew", Path("/opt/homebrew")),
             Symlink(files / "Brewfile", home / "Brewfile"),
             Command(["brew", "bundle"]),
             GPGKey(StringIO((icloud_docs / "Secrets" / "george.kontridze@gmail.com.pgp").open("r").read())),
             Symlink(files / "sheldon_plugins.toml", home / ".sheldon" / "plugins.toml"),
             Command(["sheldon", "lock"])
         ]),
-        GitRepo("git@github.com:tmux-plugins/tpm", home / ".config" / "tmux" / "plugins", "tpm"),
+        GitRepo("git@github.com:tmux-plugins/tpm", home / ".config" / "tmux" / "plugins" / "tpm"),
         GitRepo(
             "git@github.com:wbthomason/packer.nvim",
             home / ".local" / "share" / "nvim" / "site" / "pack" / "packer" / "start" / "packer.nvim",

@@ -159,7 +159,7 @@ require("lsp")
 require("treesitter")
 
 -- Set colorscheme (theme)
-vim.g.colors_name = "gruvbox8"
+vim.cmd("colorscheme gruvbox8")
 
 -- Create shorter reference for setting keymaps
 local map = vim.api.nvim_set_keymap

@@ -146,6 +146,7 @@ lspconfig.pyright.setup({
 for _, langserver in pairs({
   "bashls",
   "gopls",
+  "rust_analyzer",
   "solargraph",
   "terraformls",
   "tsserver",

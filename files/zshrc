@@ -87,6 +87,12 @@ export MANPATH="$(fd -td ^gnuman$ "${HOMEBREW_PREFIX}/Cellar" | tr '\n' ':' | se
 # Expose non-"g"-prefixed GNU executables (i.e. "tar" instead of "gtar" etc.)
 export PATH="$(fd -td ^gnubin$ "${HOMEBREW_PREFIX}/Cellar" | tr '\n' ':' | sed 's/:$//g'):${PATH}"
 
+# Expose Homebrew LLVM & Clang
+export PATH="${HOMEBREW_PREFIX}/opt/llvm/bin:${PATH}"
+
+# Expose Homebrew GCC
+export PATH="${HOMEBREW_PREFIX}/opt/gcc/bin:${PATH}"
+
 # Expose Go executables
 export GOPATH="${HOME}/go"
 export PATH="${GOPATH}/bin:${PATH}"

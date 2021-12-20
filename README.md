@@ -12,7 +12,7 @@ Not very nice:
 example:
 
 ```python
-...[directly in single file so logic code above]...
+# directly in single file so logic code above
 process(
   Command(["echo", "hello", "world"]),
   Serial([
@@ -20,7 +20,6 @@ process(
     Command(["echo", "this", "second"]),
   ])
 )
-...[graph processing code below]...
 ```
 
 At its core, syscfg is a concurrent task graph processor. Each node is
@@ -31,7 +30,6 @@ command:
 class Command(Node):
     """A command to be executed on the system."""
 
-    # pylint: disable=dangerous-default-value
     def __init__(
         self: Command,
         args: Sequence[str | Path],
