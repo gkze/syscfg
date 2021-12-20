@@ -255,7 +255,7 @@ class Container(Node):
 class Serial(Container):
     """
     Serial is a special Node that converts the passed sequence of
-    nodes into a linked list, which is a type of a unidirectional DAG. This
+    nodes into a linked list, which is a type of a bidirectional DAG. This
     allows for explicit node ordering.
     """
 
